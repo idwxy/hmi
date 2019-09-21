@@ -1,7 +1,8 @@
-package com.idwxy.hmi.service;
+package com.idwxy.hmi.service.impl;
 
 import com.idwxy.hmi.dao.UserDao;
 import com.idwxy.hmi.entity.User;
+import com.idwxy.hmi.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
