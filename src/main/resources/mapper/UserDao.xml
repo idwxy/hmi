@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.idwxy.hmi.dao.UserDao">
+    <resultMap id="UserInfo" type="com.idwxy.hmi.entity.User">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="gender" property="gender" />
+        <result column="age" property="age" />
+        <association property="doctor" column="doctor_id"
+                     javaType="com.idwxy.hmi.entity.Doctor"
+                     select="com.idwxy.hmi.dao.DoctorDao.selectBriefById" />
+    </resultMap>
+
+    <select id="select" parameterType="Integer" resultMap="UserInfo">
+        select id, name, gender, age, doctor_id
+        from user where id = #{id};
+    </select>
+
+    <select id="selectByDoctorId" resultType="com.idwxy.hmi.entity.User">
+        select id, name, gender, age
+        from user where doctor_id = #{id};
+    </select>
+
+    <insert id="insert" parameterType="com.idwxy.hmi.entity.User"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into user(name, gender,
+        age, doctor_id)
+        values(#{name}, #{gender}, #{age}, #{doctor.id});
+    </insert>
+
+    <update id="update" parameterType="com.idwxy.hmi.entity.User">
+        update user
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="doctor.id != null">
+                doctor_id = #{doctor.id},
+            </if>
+        </set>
+        where id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from user where id =
+        #{id};
+    </delete>
+</mapper>
