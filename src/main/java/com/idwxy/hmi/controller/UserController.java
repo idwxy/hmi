@@ -48,8 +48,8 @@ public class UserController {
 
     // 查询用户
     @GetMapping("/find")
-    public ResultObject find(@RequestParam Integer id) d{
-        User user = userService.selectUser(id);
+    public ResultObject find(@RequestParam Integer id) {
+        User user = userService.select(id);
         Map<String, User> map = new HashMap<>();
         map.put("user", user);
         ResultObject resultObject = new ResultObject(200, "success", map);
